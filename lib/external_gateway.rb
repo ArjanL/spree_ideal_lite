@@ -44,7 +44,7 @@ class ExternalGateway < PaymentMethod
   #Arbitrarily, this class is called ExternalGateway, but the extension is a whole is named 'HostedGateway', so
   #this is what we want our checkout/admin view partials to be named.
   def method_type
-    "hosted_gateway"
+    "spree_ideal_lite"
   end
 
   #Process response detects the status of a payment made through an external gateway by looking

@@ -1,4 +1,4 @@
-module HostedGateway
+module SpreeIdealLite
   module CheckoutControllerExt
     def self.included(base)
       base.class_eval do

@@ -1,4 +1,4 @@
-module HostedGateway
+module SpreeIdealLite
   module AdminPaymentsControllerExt
     def self.included(base)
       base.class_eval do
