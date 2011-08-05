@@ -1,0 +1,51 @@
+<% content_for :head do  -%>
+  <%= stylesheet_link_tag 'payment' -%>
+  <%= javascript_tag do -%>
+    jQuery(document).ready(function()
+    {
+      <% #First, disable all the existing form inputs -%>
+      <% # remove erb tags and hash to uncomment -> $('form :input').attr('disabled', false); %>
+      <% #Next, change where the form is pointing to -%>
+      $('form[id=checkout_form_payment]').attr('action', '<%= escape_javascript(payment_method.get_server) %>');
+      $('form').attr('method', 'post');
+      $('form').attr('accept-charset', 'UTF-8');
+      $('form').append("<%= escape_javascript(hidden_field_tag(:return_url, payment_method.get_return_url_for(@order, false))) %>");
+      $('form').append("<%= escape_javascript(hidden_field_tag(:custom_data, payment_method.get_custom_data_for(@order))) %>");     
+      $('form').append("<%= escape_javascript(hidden_field_tag(:merchantID, payment_method.get_merchantID)) %>");
+      $('form').append("<%= escape_javascript(hidden_field_tag(:subID, payment_method.get_subID)) %>");
+      $('form').append("<%= escape_javascript(hidden_field_tag(:purchaseID, payment_method.get_purchaseID(@order))) %>");
+      $('form').append("<%= escape_javascript(hidden_field_tag(:amount, payment_method.get_amount(@order))) %>");
+      $('form').append("<%= escape_javascript(hidden_field_tag(:language, payment_method.get_language)) %>");
+      $('form').append("<%= escape_javascript(hidden_field_tag(:currency, payment_method.get_currency)) %>");
+      $('form').append("<%= escape_javascript(hidden_field_tag(:description, payment_method.get_description)) %>");            
+      $('form').append("<%= escape_javascript(hidden_field_tag(:hash, payment_method.get_ideal(@order))) %>");   
+      $('form').append("<%= escape_javascript(hidden_field_tag(:validUntil, payment_method.get_validUntil(@order))) %>");
+      
+      <% payment_method.get_products(@order).each_with_index do |n,i| %>
+        $('form').append("<%= escape_javascript(hidden_field_tag("itemNumber#{(i+1)}", n[:id])) %>");
+        $('form').append("<%= escape_javascript(hidden_field_tag("itemDescription#{(i+1)}", n[:desc])) %>");
+        $('form').append("<%= escape_javascript(hidden_field_tag("itemQuantity#{(i+1)}", n[:quantity])) %>");
+        $('form').append("<%= escape_javascript(hidden_field_tag("itemPrice#{(i+1)}", n[:price])) %>");
+	   <% end %>
+	               
+      $('form').append("<%= escape_javascript(hidden_field_tag(:paymentType, payment_method.get_paymentType)) %>");
+      $('form').append("<%= escape_javascript(hidden_field_tag(:urlSuccess, payment_method.get_urlSuccess)) %>");      
+      $('form').append("<%= escape_javascript(hidden_field_tag(:urlCancel, payment_method.get_urlCancel)) %>");
+      $('form').append("<%= escape_javascript(hidden_field_tag(:urlError, payment_method.get_urlError)) %>");
+      
+      <% payment_method.additional_attributes.each do |key, value| %>
+        //console.log("<%= key %>, <%= value %>")
+        $('form').append("<%= escape_javascript(hidden_field_tag(key.to_sym, value.to_s)) %>");
+      <% end -%>
+           
+      $('form input[type=submit], form button[type=submit]').removeAttr('disabled');
+    });
+  <% end -%>
+<% end -%>
+
+<div class="external_gateway redirect_notice">
+  <%= image_tag 'store/spree_ideal_lite/proceed.png', :size => '48x48' -%>
+  <%= I18n.translate('external_gateway.checkout.redirect_notice') %>
+</div>
+
+

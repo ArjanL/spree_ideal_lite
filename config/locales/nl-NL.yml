@@ -1,0 +1,17 @@
+nl-NL:
+    status_param_key: Transactie status
+    successful_transaction_value: Transactie succesvol
+    external_gateway:
+        admin:
+            view:
+                details: Betalings details
+                amount: Bedrag
+                payment_status: Transactie Status
+                paid_at: Betaald op
+
+        checkout:
+            button_text: Betalen via iDEAL
+            redirect_notice: "U wordt doorgestuurd naar de website van iDEAL. Zodra de transactie succesvol is afgerond, dan komt u automatisch terug op onze website om de bestelling af te ronden."
+        gateway_response:
+            order_missing: "We kunnen deze bestelling niet vinden. Neem contact op met onze Customer Contact Service"
+            admin_order_missing: "De order kan niet gevonden worden, de betaling is niet afgerond bij iDEAL"
