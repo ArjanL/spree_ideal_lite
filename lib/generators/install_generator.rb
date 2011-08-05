@@ -1,4 +1,4 @@
-module HostedGateway
+module SpreeIdealLite
   module Generators
     class InstallGenerator < Rails::Generators::Base
 

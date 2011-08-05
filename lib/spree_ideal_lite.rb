@@ -11,7 +11,7 @@ module SpreeIdealLite
         Rails.env.production? ? require(c) : load(c)
       end
 
-      ExternalGateway.register
+      IdealLite.register
       CheckoutController.send(:include, SpreeIdealLite::CheckoutControllerExt)
       Admin::PaymentsController.send(:include, SpreeIdealLite::AdminPaymentsControllerExt)
     end
